@@ -9,6 +9,7 @@ INCLUDE	= .
 INCDIR	= -I$(INCLUDE)
 
 SRC		= ft_printf.c \
+		printf_parse.c \
 		printf_part1.c \
 		printf_part2.c \
 		printf_part3.c

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   printf_part3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: leticiabi <leticiabi@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 10:32:50 by hguo              #+#    #+#             */
-/*   Updated: 2025/05/16 17:57:01 by hguo             ###   ########.fr       */
+/*   Updated: 2025/05/16 21:57:42 by leticiabi        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_sign(int	value, t_format *f, int	*count)
+void	print_sign(int value, t_format *f, int	*count)
 {
 	if (value < 0)
 		*count += write(1, "-", 1);
@@ -44,7 +44,7 @@ void	print_d(va_list *args, t_format *f, int *count)
 		*count += repeat_char(f->precis - digits, '0');
 	if (!(d == 0 && f->dot && f->precis == 0))
 	{
-		print_unsigned_base(to_unsigned(d), "0123456789", 10);
+		print_ubase(to_unsigned(d), "0123456789", 10);
 		*count += digits;
 	}
 	if (f->width > len && f->left)
@@ -69,15 +69,11 @@ void	print_u(va_list *args, t_format *f, int *count)
 		else
 			*count += repeat_char(f->width - print_u, ' ');
 	}
-//	if (f->width > print_u && f->zero == 1)
-//		*count += repeat_char(f->width - print_u, '0');
-//	else if (f->width > print_u && f->left == 0)
-//		*count += repeat_char(f->width - print_u, ' ');
 	if (f->precis > numlen)
 		*count += repeat_char(f->precis - numlen, '0');
 	if (!(u == 0 && f->dot == 1 && f->precis == 0))
 	{
-		print_unsigned_base(u, "0123456789", 10);
+		print_ubase(u, "0123456789", 10);
 		*count += numlen;
 	}
 	if (f->left && f->width > print_u)
@@ -87,12 +83,10 @@ void	print_u(va_list *args, t_format *f, int *count)
 void	print_x(va_list *args, t_format *f, int *count, char *base)
 {
 	unsigned int	x;
-	int				arg;
 	int				len;
 	int				digits;
 
-	arg = va_arg(*args, int);
-	x = (unsigned int)arg;
+	x = (unsigned int)va_arg(*args, int);
 	digits = count_digits(x, 16);
 	len = digits;
 	if (f->precis > digits || (f->dot && f->precis == 0 && x == 0))
@@ -108,7 +102,7 @@ void	print_x(va_list *args, t_format *f, int *count, char *base)
 	if (f->precis > digits)
 		*count += repeat_char(f->precis - digits, '0');
 	if (!(x == 0 && f->dot && !f->precis))
-		print_unsigned_base(x, base ,16);
+		print_ubase(x, base, 16);
 	if (!(x == 0 && f->dot && !f->precis))
 		*count += digits;
 	if (f->left && f->width > len)

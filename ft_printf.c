@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: leticiabi <leticiabi@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:42:54 by hguo              #+#    #+#             */
-/*   Updated: 2025/05/16 20:32:01 by hguo             ###   ########.fr       */
+/*   Updated: 2025/05/16 21:50:42 by leticiabi        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,41 +24,6 @@ void	init_format(t_format *f)
 	f->precis = -1;
 }
 
-const char *	parse_format(const char *str, t_format *f)
-{
-	while (*str && ft_strchr("-+ 0#", *str))
-	{
-		if (*str == '-')
-			f->left = 1;
-		else if (*str == '+')
-			f->sign = 1;
-		else if (*str == ' ')
-			f->space = 1;
-		else if (*str == '0')
-			f->zero = 1;
-		else if (*str == '#')
-			f->hash = 1;
-		str++;
-	}
-	if (ft_isdigit(*str))
-	{
-		f->width = ft_atoi(str);
-		while (ft_isdigit(*str))
-			str++;
-	}
-	if (*str == '.')
-	{
-		str++;
-		f->dot = 1;
-		f->precis = ft_atoi(str);
-		while (ft_isdigit(*str))
-			str++;
-	}
-	if (ft_strchr("cspdiuxX%", *str))
-		f->type = *str++;
-	return (str);
-}
-
 void	handle_format(const char **f_ptr, va_list *args, int *count)
 {
 	t_format	f;
@@ -69,8 +34,7 @@ void	handle_format(const char **f_ptr, va_list *args, int *count)
 		f.zero = 0;
 	if (f.sign)
 		f.space = 0;
-	if (f.precis >= 0 && (f.type == 'd' || f.type == 'i' || f.type == 'u'
-			|| f.type == 'x' || f.type == 'X'))
+	if (f.dot)
 		f.zero = 0;
 	if (f.type == 'c')
 		print_c (args, &f, count);
@@ -86,8 +50,7 @@ void	handle_format(const char **f_ptr, va_list *args, int *count)
 		print_x (args, &f, count, "0123456789abcdef");
 	else if (f.type == 'X')
 		print_x (args, &f, count, "0123456789ABCDEF");
-	else if (f.type == '%')
-		*count += write(1, "%", 1);
+	*count += write(1, "%", (f.type == '%'));
 }
 
 void	run_print(const char *f_str, va_list *args, int *count)

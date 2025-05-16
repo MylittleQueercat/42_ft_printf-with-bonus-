@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printf_part2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: leticiabi <leticiabi@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 08:54:37 by hguo              #+#    #+#             */
-/*   Updated: 2025/05/16 20:37:29 by hguo             ###   ########.fr       */
+/*   Updated: 2025/05/16 21:17:27 by leticiabi        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	print_p(va_list *args, t_format *f, int *count)
 		*count += write(1, "0x", 2);
 		if (!(ptr == 0 && f->dot && f->precis == 0))
 		{
-			print_unsigned_base((unsigned long)ptr, "0123456789abcdef", 16);
+			print_ubase((unsigned long)ptr, "0123456789abcdef", 16);
 			*count += count_digits((unsigned long)ptr, 16);
 		}
 	}

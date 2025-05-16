@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printf_part1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hguo <hguo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: leticiabi <leticiabi@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 08:54:42 by hguo              #+#    #+#             */
-/*   Updated: 2025/05/16 20:31:24 by hguo             ###   ########.fr       */
+/*   Updated: 2025/05/16 21:17:16 by leticiabi        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ long	to_unsigned(long n)
 		return (n);
 }
 
-void	print_unsigned_base(unsigned long n, char *base, unsigned int base_len)
+void	print_ubase(unsigned long n, char *base, unsigned int base_len)
 {
 	if (n >= base_len)
 	{
-		print_unsigned_base(n / base_len, base, base_len);
+		print_ubase(n / base_len, base, base_len);
 		write(1, &base[n % base_len], 1);
 	}
 	else
