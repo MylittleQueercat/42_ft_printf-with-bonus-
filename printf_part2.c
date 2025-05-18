@@ -43,7 +43,9 @@ void	print_s(va_list *args, t_format *f, int *count)
 		print_len = 0;
 	if (f->width > print_len && !f->left)
 		*count += repeat_char(f->width - print_len, ' ');
-	if (!s)
+	if (!s && !f->dot)
+		*count += write(1, "(null)", len);
+	if (!s && f->precis >= 6)
 		*count += write(1, "(null)", len);
 	else if (s)
 		*count += write(1, s, print_len);
